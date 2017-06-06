@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/boxels_converter.dir/main.cpp.o  -o boxels_converter 
