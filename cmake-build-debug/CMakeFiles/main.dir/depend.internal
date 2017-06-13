@@ -239,6 +239,7 @@ CMakeFiles/main.dir/VoxelsConversion.cpp.o
  /usr/include/pcl-1.7/pcl/common/impl/projection_matrix.hpp
  /usr/include/pcl-1.7/pcl/common/io.h
  /usr/include/pcl-1.7/pcl/common/norms.h
+ /usr/include/pcl-1.7/pcl/common/point_operators.h
  /usr/include/pcl-1.7/pcl/common/point_tests.h
  /usr/include/pcl-1.7/pcl/common/projection_matrix.h
  /usr/include/pcl-1.7/pcl/common/time.h
@@ -283,13 +284,22 @@ CMakeFiles/main.dir/VoxelsConversion.cpp.o
  /usr/include/pcl-1.7/pcl/kdtree/kdtree.h
  /usr/include/pcl-1.7/pcl/kdtree/kdtree_flann.h
  /usr/include/pcl-1.7/pcl/octree/impl/octree_pointcloud.hpp
+ /usr/include/pcl-1.7/pcl/octree/impl/octree_pointcloud_voxelcentroid.hpp
  /usr/include/pcl-1.7/pcl/octree/impl/octree_search.hpp
+ /usr/include/pcl-1.7/pcl/octree/octree.h
+ /usr/include/pcl-1.7/pcl/octree/octree2buf_base.h
  /usr/include/pcl-1.7/pcl/octree/octree_base.h
  /usr/include/pcl-1.7/pcl/octree/octree_container.h
  /usr/include/pcl-1.7/pcl/octree/octree_iterator.h
  /usr/include/pcl-1.7/pcl/octree/octree_key.h
  /usr/include/pcl-1.7/pcl/octree/octree_nodes.h
  /usr/include/pcl-1.7/pcl/octree/octree_pointcloud.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_changedetector.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_density.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_occupancy.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_pointvector.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_singlepoint.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_voxelcentroid.h
  /usr/include/pcl-1.7/pcl/octree/octree_search.h
  /usr/include/pcl-1.7/pcl/pcl_base.h
  /usr/include/pcl-1.7/pcl/pcl_config.h
@@ -683,6 +693,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/pcl-1.7/pcl/common/impl/projection_matrix.hpp
  /usr/include/pcl-1.7/pcl/common/io.h
  /usr/include/pcl-1.7/pcl/common/norms.h
+ /usr/include/pcl-1.7/pcl/common/point_operators.h
  /usr/include/pcl-1.7/pcl/common/point_tests.h
  /usr/include/pcl-1.7/pcl/common/projection_matrix.h
  /usr/include/pcl-1.7/pcl/common/time.h
@@ -727,13 +738,22 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/pcl-1.7/pcl/kdtree/kdtree.h
  /usr/include/pcl-1.7/pcl/kdtree/kdtree_flann.h
  /usr/include/pcl-1.7/pcl/octree/impl/octree_pointcloud.hpp
+ /usr/include/pcl-1.7/pcl/octree/impl/octree_pointcloud_voxelcentroid.hpp
  /usr/include/pcl-1.7/pcl/octree/impl/octree_search.hpp
+ /usr/include/pcl-1.7/pcl/octree/octree.h
+ /usr/include/pcl-1.7/pcl/octree/octree2buf_base.h
  /usr/include/pcl-1.7/pcl/octree/octree_base.h
  /usr/include/pcl-1.7/pcl/octree/octree_container.h
  /usr/include/pcl-1.7/pcl/octree/octree_iterator.h
  /usr/include/pcl-1.7/pcl/octree/octree_key.h
  /usr/include/pcl-1.7/pcl/octree/octree_nodes.h
  /usr/include/pcl-1.7/pcl/octree/octree_pointcloud.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_changedetector.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_density.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_occupancy.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_pointvector.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_singlepoint.h
+ /usr/include/pcl-1.7/pcl/octree/octree_pointcloud_voxelcentroid.h
  /usr/include/pcl-1.7/pcl/octree/octree_search.h
  /usr/include/pcl-1.7/pcl/pcl_base.h
  /usr/include/pcl-1.7/pcl/pcl_config.h

@@ -4,7 +4,40 @@
 
 #include "VoxelsConversion.h"
 
-Clusters BoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_th, float curv_th, float min_cluster_size){
+boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud)
+{
+    // --------------------------------------------------------
+    // -----Open 3D viewer and add point cloud and normals-----
+    // --------------------------------------------------------
+    boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    viewer->setBackgroundColor (0.0, 0.0, 0.0);
+    viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 1.0, 0.0, "first");
+    viewer->addCoordinateSystem(1.0);
+    viewer->initCameraParameters ();
+    return (viewer);
+}
+
+boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::CloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud, PointCloud<PointXYZ>::ConstPtr second_cloud)
+{
+    // --------------------------------------------------------
+    // -----Open 3D viewer and add point cloud and normals-----
+    // --------------------------------------------------------
+    boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    viewer->setBackgroundColor (0.86, 0.86, 0.86);
+    viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
+    viewer->addPointCloud<pcl::PointXYZ> (second_cloud, "second");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "second");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 0.0, 0.0, "first");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 1.0, 0.0, "second");
+    viewer->addCoordinateSystem(1.0);
+    viewer->initCameraParameters ();
+    return (viewer);
+}
+
+Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_th, float curv_th, float min_cluster_size){
 
 //    Load cloud
     Clusters output_clusters;
@@ -87,4 +120,112 @@ Clusters BoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
 //    }
 
     return output_clusters;
+}
+
+//void VoxelsConversion::TestFunction(){
+//    srand ((unsigned int) time (NULL));
+//
+//    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
+//
+//    // Generate pointcloud data
+//    cloud->width = 1000;
+//    cloud->height = 1;
+//    cloud->points.resize (cloud->width * cloud->height);
+//
+//    for (size_t i = 0; i < cloud->points.size (); ++i)
+//    {
+//        cloud->points[i].x = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//        cloud->points[i].y = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//        cloud->points[i].z = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//    }
+//
+//    float resolution = 128.0f;
+//
+//    pcl::octree::OctreePointCloudSearch<pcl::PointXYZ> octree (resolution);
+//
+//    octree.setInputCloud (cloud);
+//    octree.addPointsFromInputCloud ();
+//
+//    pcl::PointXYZ searchPoint;
+//
+//    searchPoint.x = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//    searchPoint.y = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//    searchPoint.z = 1024.0f * rand () / (RAND_MAX + 1.0f);
+//
+//    // Neighbors within voxel search
+//
+//    std::vector<int> pointIdxVec;
+//
+//    if (octree.voxelSearch (searchPoint, pointIdxVec))
+//    {
+//        std::cout << "Neighbors within voxel search at (" << searchPoint.x
+//                  << " " << searchPoint.y
+//                  << " " << searchPoint.z << ")"
+//                  << std::endl;
+//
+//        for (size_t i = 0; i < pointIdxVec.size (); ++i)
+//            std::cout << "    " << cloud->points[pointIdxVec[i]].x
+//                      << " " << cloud->points[pointIdxVec[i]].y
+//                      << " " << cloud->points[pointIdxVec[i]].z << std::endl;
+//    }
+//
+//    // K nearest neighbor search
+//
+//    int K = 10;
+//
+//    std::vector<int> pointIdxNKNSearch;
+//    std::vector<float> pointNKNSquaredDistance;
+//
+//    std::cout << "K nearest neighbor search at (" << searchPoint.x
+//              << " " << searchPoint.y
+//              << " " << searchPoint.z
+//              << ") with K=" << K << std::endl;
+//
+//    if (octree.nearestKSearch (searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance) > 0)
+//    {
+//        for (size_t i = 0; i < pointIdxNKNSearch.size (); ++i)
+//            std::cout << "    "  <<   cloud->points[ pointIdxNKNSearch[i] ].x
+//                      << " " << cloud->points[ pointIdxNKNSearch[i] ].y
+//                      << " " << cloud->points[ pointIdxNKNSearch[i] ].z
+//                      << " (squared distance: " << pointNKNSquaredDistance[i] << ")" << std::endl;
+//    }
+//
+//    // Neighbors within radius search
+//
+//    std::vector<int> pointIdxRadiusSearch;
+//    std::vector<float> pointRadiusSquaredDistance;
+//
+//    float radius = 256.0f * rand () / (RAND_MAX + 1.0f);
+//
+//    std::cout << "Neighbors within radius search at (" << searchPoint.x
+//              << " " << searchPoint.y
+//              << " " << searchPoint.z
+//              << ") with radius=" << radius << std::endl;
+//
+//
+//    if (octree.radiusSearch (searchPoint, radius, pointIdxRadiusSearch, pointRadiusSquaredDistance) > 0)
+//    {
+//        for (size_t i = 0; i < pointIdxRadiusSearch.size (); ++i)
+//            std::cout << "    "  <<   cloud->points[ pointIdxRadiusSearch[i] ].x
+//                      << " " << cloud->points[ pointIdxRadiusSearch[i] ].y
+//                      << " " << cloud->points[ pointIdxRadiusSearch[i] ].z
+//                      << " (squared distance: " << pointRadiusSquaredDistance[i] << ")" << std::endl;
+//    }
+//}
+
+PointXYZ VoxelsConversion::FindCenterOfMass(PointCloud<PointXYZ> cloud){
+
+    pcl::MomentOfInertiaEstimation <pcl::PointXYZ> feature_extractor;
+
+    Eigen::Vector3f mass_center;
+    feature_extractor.getMassCenter(mass_center);
+
+    PointXYZ mass_center_point;
+
+    mass_center_point.x = mass_center[0];
+    mass_center_point.y = mass_center[1];
+    mass_center_point.z = mass_center[2];
+
+    return mass_center_point;
+
 }
