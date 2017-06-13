@@ -48,10 +48,10 @@ RM = /home/osboxes/Downloads/clion-2016.3.4/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/osboxes/boxels_converter
+CMAKE_SOURCE_DIR = /home/osboxes/voxels_converter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/osboxes/boxels_converter/cmake-build-debug
+CMAKE_BINARY_DIR = /home/osboxes/voxels_converter/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/boxels_converter/cmake-build-debug/CMakeFiles /home/osboxes/boxels_converter/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/boxels_converter/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,32 +123,32 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-BoxelsConversion.o: BoxelsConversion.cpp.o
+VoxelsConversion.o: VoxelsConversion.cpp.o
 
-.PHONY : BoxelsConversion.o
+.PHONY : VoxelsConversion.o
 
 # target to build an object file
-BoxelsConversion.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/BoxelsConversion.cpp.o
-.PHONY : BoxelsConversion.cpp.o
+VoxelsConversion.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.o
+.PHONY : VoxelsConversion.cpp.o
 
-BoxelsConversion.i: BoxelsConversion.cpp.i
+VoxelsConversion.i: VoxelsConversion.cpp.i
 
-.PHONY : BoxelsConversion.i
+.PHONY : VoxelsConversion.i
 
 # target to preprocess a source file
-BoxelsConversion.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/BoxelsConversion.cpp.i
-.PHONY : BoxelsConversion.cpp.i
+VoxelsConversion.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.i
+.PHONY : VoxelsConversion.cpp.i
 
-BoxelsConversion.s: BoxelsConversion.cpp.s
+VoxelsConversion.s: VoxelsConversion.cpp.s
 
-.PHONY : BoxelsConversion.s
+.PHONY : VoxelsConversion.s
 
 # target to generate assembly for a file
-BoxelsConversion.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/BoxelsConversion.cpp.s
-.PHONY : BoxelsConversion.cpp.s
+VoxelsConversion.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.s
+.PHONY : VoxelsConversion.cpp.s
 
 main.o: main.cpp.o
 
@@ -186,9 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
-	@echo "... BoxelsConversion.o"
-	@echo "... BoxelsConversion.i"
-	@echo "... BoxelsConversion.s"
+	@echo "... VoxelsConversion.o"
+	@echo "... VoxelsConversion.i"
+	@echo "... VoxelsConversion.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

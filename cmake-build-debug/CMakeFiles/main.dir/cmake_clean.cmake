@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/main.cpp.o"
-  "CMakeFiles/main.dir/BoxelsConversion.cpp.o"
+  "CMakeFiles/main.dir/VoxelsConversion.cpp.o"
   "main.pdb"
   "main"
 )

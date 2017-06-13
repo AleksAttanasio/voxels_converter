@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BoxelsConversion.h"
+#include "VoxelsConversion.h"
 
 int main() {
 

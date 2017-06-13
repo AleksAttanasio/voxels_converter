@@ -1,4 +1,4 @@
-# Install script for directory: /home/osboxes/boxels_converter
+# Install script for directory: /home/osboxes/voxels_converter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/osboxes/boxels_converter/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/osboxes/voxels_converter/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/osboxes/boxels_converter/BoxelsConversion.cpp
-BoxelsConversion.h
-/home/osboxes/boxels_converter/BoxelsConversion.h
+/home/osboxes/voxels_converter/VoxelsConversion.cpp
+VoxelsConversion.h
+/home/osboxes/voxels_converter/VoxelsConversion.h
 
-/home/osboxes/boxels_converter/BoxelsConversion.h
+/home/osboxes/voxels_converter/VoxelsConversion.h
 sstream
 -
 math.h
@@ -56,11 +56,11 @@ boost/lexical_cast.hpp
 boost/thread/thread.hpp
 -
 
-/home/osboxes/boxels_converter/main.cpp
+/home/osboxes/voxels_converter/main.cpp
 iostream
 -
-BoxelsConversion.h
-/home/osboxes/boxels_converter/BoxelsConversion.h
+VoxelsConversion.h
+/home/osboxes/voxels_converter/VoxelsConversion.h
 
 /usr/include/eigen3/Eigen/Cholesky
 Core

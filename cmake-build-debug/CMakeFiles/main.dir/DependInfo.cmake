@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/osboxes/boxels_converter/BoxelsConversion.cpp" "/home/osboxes/boxels_converter/cmake-build-debug/CMakeFiles/main.dir/BoxelsConversion.cpp.o"
-  "/home/osboxes/boxels_converter/main.cpp" "/home/osboxes/boxels_converter/cmake-build-debug/CMakeFiles/main.dir/main.cpp.o"
+  "/home/osboxes/voxels_converter/VoxelsConversion.cpp" "/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/main.dir/VoxelsConversion.cpp.o"
+  "/home/osboxes/voxels_converter/main.cpp" "/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/main.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
