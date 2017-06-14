@@ -5,9 +5,13 @@
 #ifndef VOXELSCONVERSION_H
 #define VOXELSCONVERSION_H
 
-#include <sstream>
+#include <ctime>
+#include <iostream>
 #include <math.h>
+#include <sstream>
+#include <vector>
 #include <pcl/common/common_headers.h>
+#include <pcl/common/transforms.h>
 #include <pcl/console/parse.h>
 #include <pcl/conversions.h>
 #include <pcl/features/don.h>
@@ -30,23 +34,55 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/thread/thread.hpp>
 
-#include <iostream>
-#include <vector>
-#include <ctime>
-
 using namespace std;
 using namespace pcl;
 
 typedef vector<PointCloud<PointXYZ> > Clusters;
+typedef vector<vector <vector< int > > > IntMatrix;
+typedef  vector<vector<vector <vector< int > > > > IntMatrix4D;
+
 
 class VoxelsConversion {
 
+    int side_matrix_;
+    int cont_;
+    string folder_;
+
 public:
+    /*****************/
+    /* Visualization */
+    /*****************/
+    // Viewer for two pointclouds
     boost::shared_ptr<visualization::PCLVisualizer> CloudVisualizer (PointCloud<PointXYZ>::ConstPtr cloud, PointCloud<PointXYZ>::ConstPtr second_cloud);
+    // Viewer for a single pointclouds
     boost::shared_ptr<visualization::PCLVisualizer> SingleCloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud);
+
+    /**************/
+    /* Evaluation */
+    /**************/
+
+    // Segment the point cloud using Region Growing Segmentation method
     Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 4.0, float curv_th = 0.5, float min_cluster_size = 200);
-//    void TestFunction();
+
+    // Evaluate the center of mass of a PCL
     PointXYZ FindCenterOfMass(PointCloud<PointXYZ> cloud);
+
+    PointCloud<PointXYZ>::Ptr rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z);
+
+    PointCloud<PointXYZ>::Ptr translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float trans_x, float trans_y, float trans_z);
+
+    IntMatrix getMatrix(PointCloud<PointXYZ>::Ptr cloud);
+
+    IntMatrix getSideMatrix(IntMatrix mat);
+
+    PointCloud<PointXYZ>::Ptr getSidePointCloud(PointCloud<PointXYZ>::Ptr cloud_rotated, IntMatrix side_mat);
+
+    IntMatrix4D generateMats(PointCloud<PointXYZ>::Ptr cloud, float rand_x, float rand_y, float rand_z, float camera_rot_x, float camera_rot_y, float camera_rot_z, float camera_trans_x, float camera_trans_y, float camera_trans_z);
+
+    void writeMat(IntMatrix mat, const std::string file_name);
+
+    void generateDataset(int num_objects, int cubes, int cylinders, int cones, int spheres, int orientations, std::string iterator);
+
 
 
 };

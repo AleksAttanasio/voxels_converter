@@ -11,11 +11,19 @@ VoxelsConversion.h
 /home/osboxes/voxels_converter/VoxelsConversion.h
 
 /home/osboxes/voxels_converter/VoxelsConversion.h
-sstream
+ctime
+-
+iostream
 -
 math.h
 -
+sstream
+-
+vector
+-
 pcl/common/common_headers.h
+-
+pcl/common/transforms.h
 -
 pcl/console/parse.h
 -
@@ -58,12 +66,6 @@ pcl/visualization/pcl_visualizer.h
 boost/lexical_cast.hpp
 -
 boost/thread/thread.hpp
--
-iostream
--
-vector
--
-ctime
 -
 
 /home/osboxes/voxels_converter/main.cpp
@@ -1360,6 +1362,8 @@ pcl/console/print.h
 pcl/cloud_iterator.h
 -
 
+/usr/include/pcl-1.7/pcl/common/impl/transforms.hpp
+
 /usr/include/pcl-1.7/pcl/common/io.h
 string
 -
@@ -1400,6 +1404,20 @@ cmath
 string
 -
 boost/date_time/posix_time/posix_time.hpp
+-
+
+/usr/include/pcl-1.7/pcl/common/transforms.h
+pcl/point_cloud.h
+-
+pcl/point_types.h
+-
+pcl/common/centroid.h
+-
+pcl/common/eigen.h
+-
+pcl/PointIndices.h
+-
+pcl/common/impl/transforms.hpp
 -
 
 /usr/include/pcl-1.7/pcl/console/parse.h

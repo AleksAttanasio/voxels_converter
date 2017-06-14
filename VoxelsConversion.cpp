@@ -4,8 +4,7 @@
 
 #include "VoxelsConversion.h"
 
-boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud)
-{
+boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud) {
     // --------------------------------------------------------
     // -----Open 3D viewer and add point cloud and normals-----
     // --------------------------------------------------------
@@ -19,8 +18,7 @@ boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVis
     return (viewer);
 }
 
-boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::CloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud, PointCloud<PointXYZ>::ConstPtr second_cloud)
-{
+boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::CloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud, PointCloud<PointXYZ>::ConstPtr second_cloud) {
     // --------------------------------------------------------
     // -----Open 3D viewer and add point cloud and normals-----
     // --------------------------------------------------------
@@ -122,97 +120,6 @@ Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
     return output_clusters;
 }
 
-//void VoxelsConversion::TestFunction(){
-//    srand ((unsigned int) time (NULL));
-//
-//    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-//
-//    // Generate pointcloud data
-//    cloud->width = 1000;
-//    cloud->height = 1;
-//    cloud->points.resize (cloud->width * cloud->height);
-//
-//    for (size_t i = 0; i < cloud->points.size (); ++i)
-//    {
-//        cloud->points[i].x = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//        cloud->points[i].y = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//        cloud->points[i].z = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//    }
-//
-//    float resolution = 128.0f;
-//
-//    pcl::octree::OctreePointCloudSearch<pcl::PointXYZ> octree (resolution);
-//
-//    octree.setInputCloud (cloud);
-//    octree.addPointsFromInputCloud ();
-//
-//    pcl::PointXYZ searchPoint;
-//
-//    searchPoint.x = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//    searchPoint.y = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//    searchPoint.z = 1024.0f * rand () / (RAND_MAX + 1.0f);
-//
-//    // Neighbors within voxel search
-//
-//    std::vector<int> pointIdxVec;
-//
-//    if (octree.voxelSearch (searchPoint, pointIdxVec))
-//    {
-//        std::cout << "Neighbors within voxel search at (" << searchPoint.x
-//                  << " " << searchPoint.y
-//                  << " " << searchPoint.z << ")"
-//                  << std::endl;
-//
-//        for (size_t i = 0; i < pointIdxVec.size (); ++i)
-//            std::cout << "    " << cloud->points[pointIdxVec[i]].x
-//                      << " " << cloud->points[pointIdxVec[i]].y
-//                      << " " << cloud->points[pointIdxVec[i]].z << std::endl;
-//    }
-//
-//    // K nearest neighbor search
-//
-//    int K = 10;
-//
-//    std::vector<int> pointIdxNKNSearch;
-//    std::vector<float> pointNKNSquaredDistance;
-//
-//    std::cout << "K nearest neighbor search at (" << searchPoint.x
-//              << " " << searchPoint.y
-//              << " " << searchPoint.z
-//              << ") with K=" << K << std::endl;
-//
-//    if (octree.nearestKSearch (searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance) > 0)
-//    {
-//        for (size_t i = 0; i < pointIdxNKNSearch.size (); ++i)
-//            std::cout << "    "  <<   cloud->points[ pointIdxNKNSearch[i] ].x
-//                      << " " << cloud->points[ pointIdxNKNSearch[i] ].y
-//                      << " " << cloud->points[ pointIdxNKNSearch[i] ].z
-//                      << " (squared distance: " << pointNKNSquaredDistance[i] << ")" << std::endl;
-//    }
-//
-//    // Neighbors within radius search
-//
-//    std::vector<int> pointIdxRadiusSearch;
-//    std::vector<float> pointRadiusSquaredDistance;
-//
-//    float radius = 256.0f * rand () / (RAND_MAX + 1.0f);
-//
-//    std::cout << "Neighbors within radius search at (" << searchPoint.x
-//              << " " << searchPoint.y
-//              << " " << searchPoint.z
-//              << ") with radius=" << radius << std::endl;
-//
-//
-//    if (octree.radiusSearch (searchPoint, radius, pointIdxRadiusSearch, pointRadiusSquaredDistance) > 0)
-//    {
-//        for (size_t i = 0; i < pointIdxRadiusSearch.size (); ++i)
-//            std::cout << "    "  <<   cloud->points[ pointIdxRadiusSearch[i] ].x
-//                      << " " << cloud->points[ pointIdxRadiusSearch[i] ].y
-//                      << " " << cloud->points[ pointIdxRadiusSearch[i] ].z
-//                      << " (squared distance: " << pointRadiusSquaredDistance[i] << ")" << std::endl;
-//    }
-//}
-
 PointXYZ VoxelsConversion::FindCenterOfMass(PointCloud<PointXYZ> cloud){
 
     pcl::MomentOfInertiaEstimation <pcl::PointXYZ> feature_extractor;
@@ -229,3 +136,197 @@ PointXYZ VoxelsConversion::FindCenterOfMass(PointCloud<PointXYZ> cloud){
     return mass_center_point;
 
 }
+
+PointCloud<PointXYZ>::Ptr VoxelsConversion::rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z){
+    Eigen::Affine3f rot=Eigen::Affine3f::Identity();
+    rot.rotate(Eigen::AngleAxisf(rot_x, Eigen::Vector3f::UnitX()));
+    rot.rotate(Eigen::AngleAxisf(rot_y, Eigen::Vector3f::UnitY()));
+    rot.rotate(Eigen::AngleAxisf(rot_z, Eigen::Vector3f::UnitZ()));
+    Eigen::Affine3f trans=Eigen::Affine3f::Identity();
+    trans.translation() << -side_matrix_/2, -side_matrix_/2, -side_matrix_/2;
+    Eigen::Affine3f trans2=Eigen::Affine3f::Identity();
+    trans2.translation() << side_matrix_/2, side_matrix_/2, side_matrix_/2;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr rotated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
+    pcl::transformPointCloud(*cloud, *rotated_cloud, trans);
+    pcl::transformPointCloud(*rotated_cloud, *rotated_cloud, rot);
+    pcl::transformPointCloud(*rotated_cloud, *rotated_cloud, trans2);
+    return rotated_cloud;
+}
+
+PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float trans_x, float trans_y, float trans_z){
+    Eigen::Affine3f trans=Eigen::Affine3f::Identity();
+    trans.translation() << trans_x, trans_y, trans_z;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr translated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
+    pcl::transformPointCloud(*cloud, *translated_cloud, trans);
+    return translated_cloud;
+}
+
+IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
+
+    IntMatrix mat;
+
+    // Initialize matrix
+    for(int l=0; l<side_matrix_; l++){
+        std::vector<std::vector<int> > vec_vec;
+        for(int m=0; m<side_matrix_; m++){
+            std::vector<int> vec;
+            for(int n=0; n<side_matrix_; n++){
+                vec.push_back(0);
+            }
+            vec_vec.push_back(vec);
+        }
+        mat.push_back(vec_vec);
+    }
+
+    // Check on matrix rotation
+    for(int i=0; i<cloud->size(); i++){
+        if(cloud->points[i].x>=side_matrix_ || cloud->points[i].x<0 || cloud->points[i].y>=side_matrix_ || cloud->points[i].y<0 || cloud->points[i].z>=side_matrix_ || cloud->points[i].z<0){
+            std::cout<<"Error rotation, out of matrix: "<<cloud->points[i].x<<" "<<cloud->points[i].y<<" "<<cloud->points[i].z<<std::endl;
+            mat.resize(0);
+            return mat;
+        }
+        else
+            mat[cloud->points[i].x][cloud->points[i].y][cloud->points[i].z]=1;
+    }
+    return mat;
+}
+
+IntMatrix VoxelsConversion::getSideMatrix(IntMatrix mat){
+    IntMatrix side_mat;
+    for(int l=0; l<side_matrix_; l++){
+        std::vector<std::vector<int> > vec_vec;
+        for(int m=0; m<side_matrix_; m++){
+            std::vector<int> vec;
+            for(int n=0; n<side_matrix_; n++){
+                vec.push_back(0);
+            }
+            vec_vec.push_back(vec);
+        }
+        side_mat.push_back(vec_vec);
+    }
+
+    for(int i=0; i<mat.size(); i++){
+        for(int j=0; j<mat[0].size(); j++){
+            bool found=false;
+            for(int k=0; k<mat[0][0].size(); k++){
+                if(mat[i][j][k]==1){
+                    if(!found){
+                        side_mat[i][j][k]=1;
+                        found=true;
+                    }
+                }
+            }
+        }
+    }
+    return side_mat;
+}
+
+PointCloud<PointXYZ>::Ptr VoxelsConversion::getSidePointCloud(PointCloud<PointXYZ>::Ptr cloud_rotated, IntMatrix side_mat){
+    PointCloud<PointXYZ>::Ptr side_cloud(new PointCloud<PointXYZ>);
+    int cont=0;
+    for(int i=0; i<cloud_rotated->points.size(); i++){
+        if(side_mat[(int)cloud_rotated->points[i].x][(int)cloud_rotated->points[i].y][(int)cloud_rotated->points[i].z]==1){
+            cont++;
+            side_cloud->height=cont;
+            side_cloud->points.resize(cont);
+            side_cloud->points[cont-1].x=cloud_rotated->points[i].x;
+            side_cloud->points[cont-1].y=cloud_rotated->points[i].y;
+            side_cloud->points[cont-1].z=cloud_rotated->points[i].z;
+        }
+    }
+    return side_cloud;
+}
+
+IntMatrix4D VoxelsConversion::generateMats(PointCloud<PointXYZ>::Ptr cloud, float rand_x, float rand_y, float rand_z, float camera_rot_x, float camera_rot_y, float camera_rot_z, float camera_trans_x, float camera_trans_y, float camera_trans_z){
+
+    IntMatrix4D mats;
+    VoxelsConversion vc;
+
+    PointCloud<PointXYZ>::Ptr cloud_rotated = vc.rotatePointCloud(cloud, rand_x, rand_y, rand_z);
+
+    IntMatrix mat = vc.getMatrix(cloud_rotated);
+    if(mat.size()==0){
+        mats.resize(0);
+        return mats;
+    }
+
+    IntMatrix side_mat = vc.getSideMatrix(mat);
+
+    PointCloud<PointXYZ>::Ptr side_cloud = vc.getSidePointCloud(cloud_rotated, side_mat);
+    PointCloud<PointXYZ>::Ptr arm_cloud= vc.rotatePointCloud(cloud_rotated, camera_rot_x, camera_rot_y, camera_rot_z);
+    PointCloud<PointXYZ>::Ptr arm_side_cloud= vc.rotatePointCloud(side_cloud, camera_rot_x, camera_rot_y, camera_rot_z);
+
+    IntMatrix mat_arm = vc.getMatrix(translatePointCloud(arm_cloud, camera_trans_x, camera_trans_y, camera_trans_z));
+    if(mat_arm.size()==0){
+        mats.resize(0);
+        return mats;
+    }
+
+    IntMatrix side_mat_arm=getMatrix(translatePointCloud(arm_side_cloud, camera_trans_x, camera_trans_y, camera_trans_z));
+    if(side_mat_arm.size()==0){
+        mats.resize(0);
+        return mats;
+    }
+
+    mats.push_back(side_mat_arm);
+    mats.push_back(mat_arm);
+    return mats;
+}
+
+void VoxelsConversion::writeMat(IntMatrix mat, const std::string file_name){
+
+    std::ofstream file(file_name.c_str());
+    for(int i=0; i<mat.size(); i++){
+        for(int j=0; j<mat[0].size(); j++){
+            for(int k=0; k<mat[0][0].size(); k++){
+                file<<mat[i][j][k]<<" ";
+            }
+        }
+    }
+    file.close();
+}
+
+void VoxelsConversion::generateDataset(int num_objects, int cubes, int cylinders, int cones, int spheres, int orientations, string iterator){
+    string training_validation;
+
+    for(int i=0; i<num_objects/(cubes+cylinders+cones+spheres)/orientations; i++){
+        for (int cube=0; cube<cubes; cube++){
+            float x=(((std::rand()%100)/100.0)*x_max_)+x_min_;
+            float y=(((std::rand()%100)/100.0)*y_max_)+y_min_;
+            float z=(((std::rand()%100)/100.0)*z_max_)+z_min_;
+
+            for(int orientation=0; orientation<orientations; orientation++){
+
+                bool good=false;
+                while(!good){
+                    float rand_x=(std::rand()%1000)/1000.0*3.1415;
+                    float rand_y=(std::rand()%1000)/1000.0*3.1415;
+                    float rand_z=(std::rand()%1000)/1000.0*3.1415;
+
+
+                    float camera_rot_x=(std::rand()%1000)/1000.0*3.1415;
+                    float camera_rot_y=(std::rand()%1000)/1000.0*3.1415;
+                    float camera_rot_z=(std::rand()%1000)/1000.0*3.1415;
+
+                    float camera_trans_x=((std::rand()%100)/100.0*40)-20;
+                    float camera_trans_y=((std::rand()%100)/100.0*40)-20;
+                    float camera_trans_z=((std::rand()%100)/100.0*40)-20;
+
+
+                    std::vector< std::vector< std::vector <std::vector< int > > > > mats=generateMats(cube_cloud, rand_x, rand_y, rand_z, camera_rot_x, camera_rot_y, camera_rot_z, camera_trans_x, camera_trans_y, camera_trans_z);
+                    if(mats.size()!=0){
+                        good=true;
+
+                        std::ostringstream id;
+                        id<<cont_;
+
+                        writeMat(mats[0], folder_+iterator+training_validation+"/side_objects/"+id.str()+".txt");
+                        writeMat(mats[1], folder_+iterator+training_validation+"/complete_objects/"+id.str()+".txt");
+                    }
+                }
+            }
+
+        }
+}
+
+
