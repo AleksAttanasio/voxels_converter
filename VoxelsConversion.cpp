@@ -11,8 +11,8 @@ boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVis
     boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     viewer->setBackgroundColor (0.0, 0.0, 0.0);
     viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 1.0, 0.0, "first");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first"); // Set size of the point cloud
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 1.0, 0.0, "first"); // Set color of the point cloud
     viewer->addCoordinateSystem(1.0);
     viewer->initCameraParameters ();
     return (viewer);
@@ -26,10 +26,10 @@ boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::CloudVisualize
     viewer->setBackgroundColor (0.70, 0.70, 0.70);
     viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
     viewer->addPointCloud<pcl::PointXYZ> (second_cloud, "second");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "second");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 0.0, 0.0, "first");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.8, 0.0, 0.0, "second");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "first"); // Set size of the first point cloud
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "second"); // Set size of the second point cloud
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 0.0, 0.0, "first"); // Set color of the second  point cloud
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, 0.8, 0.0, 0.0, "second"); // Set color of the first point cloud
     viewer->addCoordinateSystem(0.0);
     viewer->initCameraParameters ();
     return (viewer);
@@ -40,10 +40,28 @@ FloatMatrixCOM VoxelsConversion::getCenterOfMass (PointCloud<PointXYZ> cloud){
     FloatMatrixCOM center_of_mass;
 
     unsigned int check = pcl::compute3DCentroid(cloud,center_of_mass);
-
     cout << center_of_mass << endl;
 
     return center_of_mass;
+}
+
+PointCloud<PointXYZ>::Ptr VoxelsConversion::generateCube(float x, float y, float z){
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    cloud->height=1;
+    int cont=0;
+    for(float i=-x/2; i<x/2; i+=0.25){
+        for(float j=-y/2; j<y/2; j+=0.25){
+            for(float k=-z/2; k<z/2; k+=0.25){
+                cont++;
+                cloud->width=cont;
+                cloud->points.resize(cont);
+                cloud->points[cont-1].x=side_matrix_/2+i;
+                cloud->points[cont-1].y=side_matrix_/2+j;
+                cloud->points[cont-1].z=side_matrix_/2+k;
+            }
+        }
+    }
+    return cloud;
 }
 
 Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_th, float curv_th, float min_cluster_size){
@@ -149,7 +167,7 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::rotatePointCloud(PointCloud<PointXYZ
 
 PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, FloatMatrixCOM trans_mat){
     Eigen::Affine3f trans=Eigen::Affine3f::Identity();
-    trans.translation() << trans_mat(0,0), trans_mat(1,0), trans_mat(2,0);
+    trans.translation() << -trans_mat(0,0)+0.2, -trans_mat(1,0)+0.2, -trans_mat(2,0)+0.2;
     pcl::PointCloud<pcl::PointXYZ>::Ptr translated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
     pcl::transformPointCloud(*cloud, *translated_cloud, trans);
     return translated_cloud;
@@ -158,7 +176,7 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<Point
 IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
 
     IntMatrix mat;
-
+    side_matrix_ = 30;
     // Initialize matrix
     for(int l=0; l<side_matrix_; l++){
         std::vector<std::vector<int> > vec_vec;
@@ -180,147 +198,21 @@ IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
             return mat;
         }
         else
-            mat[cloud->points[i].x][cloud->points[i].y][cloud->points[i].z]=1;
+            mat[cloud->points[i].x*20][cloud->points[i].y*20][cloud->points[i].z*20]=1;
     }
     return mat;
 }
 
-//IntMatrix VoxelsConversion::getSideMatrix(IntMatrix mat){
-//    IntMatrix side_mat;
-//    for(int l=0; l<side_matrix_; l++){
-//        std::vector<std::vector<int> > vec_vec;
-//        for(int m=0; m<side_matrix_; m++){
-//            std::vector<int> vec;
-//            for(int n=0; n<side_matrix_; n++){
-//                vec.push_back(0);
-//            }
-//            vec_vec.push_back(vec);
-//        }
-//        side_mat.push_back(vec_vec);
-//    }
-//
-//    for(int i=0; i<mat.size(); i++){
-//        for(int j=0; j<mat[0].size(); j++){
-//            bool found=false;
-//            for(int k=0; k<mat[0][0].size(); k++){
-//                if(mat[i][j][k]==1){
-//                    if(!found){
-//                        side_mat[i][j][k]=1;
-//                        found=true;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    return side_mat;
-//}
-//
-//PointCloud<PointXYZ>::Ptr VoxelsConversion::getSidePointCloud(PointCloud<PointXYZ>::Ptr cloud_rotated, IntMatrix side_mat){
-//    PointCloud<PointXYZ>::Ptr side_cloud(new PointCloud<PointXYZ>);
-//    int cont=0;
-//    for(int i=0; i<cloud_rotated->points.size(); i++){
-//        if(side_mat[(int)cloud_rotated->points[i].x][(int)cloud_rotated->points[i].y][(int)cloud_rotated->points[i].z]==1){
-//            cont++;
-//            side_cloud->height=cont;
-//            side_cloud->points.resize(cont);
-//            side_cloud->points[cont-1].x=cloud_rotated->points[i].x;
-//            side_cloud->points[cont-1].y=cloud_rotated->points[i].y;
-//            side_cloud->points[cont-1].z=cloud_rotated->points[i].z;
-//        }
-//    }
-//    return side_cloud;
-//}
-//
-//IntMatrix4D VoxelsConversion::generateMats(PointCloud<PointXYZ>::Ptr cloud, float rand_x, float rand_y, float rand_z, float camera_rot_x, float camera_rot_y, float camera_rot_z, float camera_trans_x, float camera_trans_y, float camera_trans_z){
-//
-//    IntMatrix4D mats;
-//    VoxelsConversion vc;
-//
-//    PointCloud<PointXYZ>::Ptr cloud_rotated = vc.rotatePointCloud(cloud, rand_x, rand_y, rand_z);
-//
-//    IntMatrix mat = vc.getMatrix(cloud_rotated);
-//    if(mat.size()==0){
-//        mats.resize(0);
-//        return mats;
-//    }
-//
-//    IntMatrix side_mat = vc.getSideMatrix(mat);
-//
-//    PointCloud<PointXYZ>::Ptr side_cloud = vc.getSidePointCloud(cloud_rotated, side_mat);
-//    PointCloud<PointXYZ>::Ptr arm_cloud= vc.rotatePointCloud(cloud_rotated, camera_rot_x, camera_rot_y, camera_rot_z);
-//    PointCloud<PointXYZ>::Ptr arm_side_cloud= vc.rotatePointCloud(side_cloud, camera_rot_x, camera_rot_y, camera_rot_z);
-//
-//    IntMatrix mat_arm = vc.getMatrix(translatePointCloud(arm_cloud, camera_trans_x, camera_trans_y, camera_trans_z));
-//    if(mat_arm.size()==0){
-//        mats.resize(0);
-//        return mats;
-//    }
-//
-//    IntMatrix side_mat_arm=getMatrix(translatePointCloud(arm_side_cloud, camera_trans_x, camera_trans_y, camera_trans_z));
-//    if(side_mat_arm.size()==0){
-//        mats.resize(0);
-//        return mats;
-//    }
-//
-//    mats.push_back(side_mat_arm);
-//    mats.push_back(mat_arm);
-//    return mats;
-//}
-//
-//void VoxelsConversion::writeMat(IntMatrix mat, const std::string file_name){
-//
-//    std::ofstream file(file_name.c_str());
-//    for(int i=0; i<mat.size(); i++){
-//        for(int j=0; j<mat[0].size(); j++){
-//            for(int k=0; k<mat[0][0].size(); k++){
-//                file<<mat[i][j][k]<<" ";
-//            }
-//        }
-//    }
-//    file.close();
-//}
-//
-//void VoxelsConversion::generateDataset(string cloud_name, int orientations) {
-//
-//    PointCloud<PointXYZ>::Ptr cloud;
-//    io::loadPCDFile(cloud_name, *cloud);
-//
-////            float x=(((rand()%100)/100.0)*x_max_)+x_min_;
-////            float y=(((rand()%100)/100.0)*y_max_)+y_min_;
-////            float z=(((rand()%100)/100.0)*z_max_)+z_min_;
-//
-//    for (int orientation = 0; orientation < orientations; orientation++) {
-//
-//        bool good = false;
-//        while (!good) {
-//            float rand_x = (rand() % 1000) / 1000.0 * 3.1415;
-//            float rand_y = (rand() % 1000) / 1000.0 * 3.1415;
-//            float rand_z = (rand() % 1000) / 1000.0 * 3.1415;
-//
-//
-//            float camera_rot_x = (rand() % 1000) / 1000.0 * 3.1415;
-//            float camera_rot_y = (rand() % 1000) / 1000.0 * 3.1415;
-//            float camera_rot_z = (rand() % 1000) / 1000.0 * 3.1415;
-//
-//            float camera_trans_x = ((rand() % 100) / 100.0 * 40) - 20;
-//            float camera_trans_y = ((rand() % 100) / 100.0 * 40) - 20;
-//            float camera_trans_z = ((rand() % 100) / 100.0 * 40) - 20;
-//
-//
-//            IntMatrix4D mats = generateMats(cloud, rand_x, rand_y, rand_z, camera_rot_x, camera_rot_y, camera_rot_z,
-//                                            camera_trans_x, camera_trans_y, camera_trans_z);
-//            if (mats.size() != 0) {
-//                good = true;
-//
-//                std::ostringstream id;
-//                id << cont_;
-//
-////                writeMat(mats[0], folder_ + iterator + training_validation + "/side_objects/" + id.str() + ".txt");
-////                writeMat(mats[1], folder_ + iterator + training_validation + "/complete_objects/" + id.str() + ".txt");
-//            }
-//
-//        }
-//    }
-//}
+void VoxelsConversion::writeMat(IntMatrix mat, const string file_name){
 
+    std::ofstream file(file_name.c_str());
+    for(int i=0; i<mat.size(); i++){
+        for(int j=0; j<mat[0].size(); j++){
+            for(int k=0; k<mat[0][0].size(); k++){
+                file<<mat[i][j][k]<<" ";
+            }
+        }
+    }
+    file.close();
+}
 

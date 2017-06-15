@@ -45,11 +45,11 @@ typedef Eigen::Matrix<float,4,1> FloatMatrixCOM;
 
 class VoxelsConversion {
 
-    int side_matrix_;
     int cont_;
     string folder_;
-
 public:
+
+    int side_matrix_;
     /*****************/
     /* Visualization */
     /*****************/
@@ -69,24 +69,18 @@ public:
     // Segment the point cloud using Region Growing Segmentation method
     Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 4.0, float curv_th = 0.5, float min_cluster_size = 200);
 
+    PointCloud<PointXYZ>::Ptr generateCube(float x, float y, float z);
 
     PointCloud<PointXYZ>::Ptr rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z);
 
+    // Given the transformation matrix "trans" the PCL can be translated
     PointCloud<PointXYZ>::Ptr translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, FloatMatrixCOM trans);
 
+    // Generates the matrix with voxels
     IntMatrix getMatrix(PointCloud<PointXYZ>::Ptr cloud);
 
-    IntMatrix getSideMatrix(IntMatrix mat);
-
-    PointCloud<PointXYZ>::Ptr getSidePointCloud(PointCloud<PointXYZ>::Ptr cloud_rotated, IntMatrix side_mat);
-
-    IntMatrix4D generateMats(PointCloud<PointXYZ>::Ptr cloud, float rand_x, float rand_y, float rand_z, float camera_rot_x, float camera_rot_y, float camera_rot_z, float camera_trans_x, float camera_trans_y, float camera_trans_z);
-
+    // Generates the .txt file with voxels
     void writeMat(IntMatrix mat, const std::string file_name);
-
-    void generateDataset(string cloud_name, int orientations);
-
-
 
 };
 
