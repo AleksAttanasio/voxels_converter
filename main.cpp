@@ -16,7 +16,7 @@ int main() {
 
     cout << mass_center(0,0) << ", " << mass_center(1,0) << ", " << mass_center(2,0) << endl;
 
-    translated_cloud = vc.translatePointCloud(cloud, mass_center(0,0), mass_center(1,0), mass_center(2,0));
+    translated_cloud = vc.translatePointCloud(cloud, mass_center);
 
     viewer = vc.CloudVisualizer(cloud, translated_cloud);
 

@@ -53,6 +53,7 @@ public:
     /*****************/
     /* Visualization */
     /*****************/
+
     // Viewer for two pointclouds
     boost::shared_ptr<visualization::PCLVisualizer> CloudVisualizer (PointCloud<PointXYZ>::ConstPtr cloud, PointCloud<PointXYZ>::ConstPtr second_cloud);
     // Viewer for a single pointclouds
@@ -62,17 +63,16 @@ public:
     /* Evaluation */
     /**************/
 
-
+    // Evaluate the center of mass of a PCL
     FloatMatrixCOM getCenterOfMass (PointCloud<PointXYZ> cloud);
 
     // Segment the point cloud using Region Growing Segmentation method
     Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 4.0, float curv_th = 0.5, float min_cluster_size = 200);
 
 
-
     PointCloud<PointXYZ>::Ptr rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z);
 
-    PointCloud<PointXYZ>::Ptr translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float trans_x, float trans_y, float trans_z);
+    PointCloud<PointXYZ>::Ptr translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, FloatMatrixCOM trans);
 
     IntMatrix getMatrix(PointCloud<PointXYZ>::Ptr cloud);
 

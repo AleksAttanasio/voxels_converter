@@ -147,9 +147,9 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::rotatePointCloud(PointCloud<PointXYZ
     return rotated_cloud;
 }
 
-PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float trans_x, float trans_y, float trans_z){
+PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, FloatMatrixCOM trans_mat){
     Eigen::Affine3f trans=Eigen::Affine3f::Identity();
-    trans.translation() << trans_x, trans_y, trans_z;
+    trans.translation() << trans_mat(0,0), trans_mat(1,0), trans_mat(2,0);
     pcl::PointCloud<pcl::PointXYZ>::Ptr translated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
     pcl::transformPointCloud(*cloud, *translated_cloud, trans);
     return translated_cloud;
