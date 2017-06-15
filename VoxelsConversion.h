@@ -39,7 +39,8 @@ using namespace pcl;
 
 typedef vector<PointCloud<PointXYZ> > Clusters;
 typedef vector<vector <vector< int > > > IntMatrix;
-typedef  vector<vector<vector <vector< int > > > > IntMatrix4D;
+typedef vector<vector<vector <vector< int > > > > IntMatrix4D;
+typedef Eigen::Matrix<float,4,1> FloatMatrixCOM;
 
 
 class VoxelsConversion {
@@ -61,11 +62,13 @@ public:
     /* Evaluation */
     /**************/
 
+
+    FloatMatrixCOM getCenterOfMass (PointCloud<PointXYZ> cloud);
+
     // Segment the point cloud using Region Growing Segmentation method
     Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 4.0, float curv_th = 0.5, float min_cluster_size = 200);
 
-    // Evaluate the center of mass of a PCL
-    PointXYZ FindCenterOfMass(PointCloud<PointXYZ> cloud);
+
 
     PointCloud<PointXYZ>::Ptr rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z);
 
@@ -81,7 +84,7 @@ public:
 
     void writeMat(IntMatrix mat, const std::string file_name);
 
-    void generateDataset(int num_objects, int cubes, int cylinders, int cones, int spheres, int orientations, std::string iterator);
+    void generateDataset(string cloud_name, int orientations);
 
 
 
