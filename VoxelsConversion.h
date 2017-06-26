@@ -71,6 +71,7 @@ public:
 
     PointCloud<PointXYZ>::Ptr generateCube(float x, float y, float z);
 
+    // Rotate point cloud given the rotation matrix as coordinates
     PointCloud<PointXYZ>::Ptr rotatePointCloud(PointCloud<PointXYZ>::Ptr cloud, float rot_x, float rot_y, float rot_z);
 
     // Given the transformation matrix "trans" the PCL can be translated
@@ -79,7 +80,7 @@ public:
     // Generates the matrix with voxels
     IntMatrix getMatrix(PointCloud<PointXYZ>::Ptr cloud);
 
-    // Generates the .txt file with voxels
+    // Generates .txt file with voxels
     void writeMat(IntMatrix mat, const std::string file_name);
 
 };

@@ -5,9 +5,6 @@
 #include "VoxelsConversion.h"
 
 boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud) {
-    // --------------------------------------------------------
-    // -----Open 3D viewer and add point cloud and normals-----
-    // --------------------------------------------------------
     boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     viewer->setBackgroundColor (0.0, 0.0, 0.0);
     viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
@@ -19,9 +16,6 @@ boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::SingleCloudVis
 }
 
 boost::shared_ptr<visualization::PCLVisualizer> VoxelsConversion::CloudVisualizer (PointCloud<PointXYZ>::ConstPtr first_cloud, PointCloud<PointXYZ>::ConstPtr second_cloud) {
-    // --------------------------------------------------------
-    // -----Open 3D viewer and add point cloud and normals-----
-    // --------------------------------------------------------
     boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     viewer->setBackgroundColor (0.70, 0.70, 0.70);
     viewer->addPointCloud<pcl::PointXYZ> (first_cloud, "first");
@@ -39,8 +33,8 @@ FloatMatrixCOM VoxelsConversion::getCenterOfMass (PointCloud<PointXYZ> cloud){
 
     FloatMatrixCOM center_of_mass;
 
-    unsigned int check = pcl::compute3DCentroid(cloud,center_of_mass);
-    cout << center_of_mass << endl;
+    unsigned int check = pcl::compute3DCentroid(cloud,center_of_mass); // evaluation of COM
+//    cout << "Center of mass in: " << center_of_mass << endl; // visualize center of mass coordinates
 
     return center_of_mass;
 }
@@ -101,18 +95,6 @@ Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
     reg.extract (clusters);
 
     std::cout << "Number of clusters is equal to " << clusters.size () << std::endl;
-//    std::cout << "First cluster has " << clusters[1].indices.size () << " points." << endl;
-//    std::cout << "These are the indices of the points of the initial" <<
-//              std::endl << "cloud that belong to the first cluster:" << std::endl;
-//    int counter = 0;
-//    while (counter < clusters[1].indices.size ())
-//    {
-//        std::cout << clusters[1].indices[counter] << ", ";
-//        counter++;
-//        if (counter % 10 == 0)
-//            std::cout << std::endl;
-//    }
-//    std::cout << std::endl;
 
     int j = 0;
     pcl::PCDWriter writer;
@@ -138,7 +120,7 @@ Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
         ss << "rg_cluster_" << j << ".pcd";
         writer.write<pcl::PointXYZ> (ss.str (), *cloud_cluster_don, false);
     }
-
+//    // Visualize segmentation
 //    pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud ();
 //    pcl::visualization::CloudViewer viewer ("Cluster viewer");
 //    viewer.showCloud(colored_cloud);
@@ -154,10 +136,12 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::rotatePointCloud(PointCloud<PointXYZ
     rot.rotate(Eigen::AngleAxisf(rot_x, Eigen::Vector3f::UnitX()));
     rot.rotate(Eigen::AngleAxisf(rot_y, Eigen::Vector3f::UnitY()));
     rot.rotate(Eigen::AngleAxisf(rot_z, Eigen::Vector3f::UnitZ()));
+
     Eigen::Affine3f trans=Eigen::Affine3f::Identity();
     trans.translation() << -side_matrix_/2, -side_matrix_/2, -side_matrix_/2;
     Eigen::Affine3f trans2=Eigen::Affine3f::Identity();
     trans2.translation() << side_matrix_/2, side_matrix_/2, side_matrix_/2;
+
     pcl::PointCloud<pcl::PointXYZ>::Ptr rotated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
     pcl::transformPointCloud(*cloud, *rotated_cloud, trans);
     pcl::transformPointCloud(*rotated_cloud, *rotated_cloud, rot);
@@ -167,14 +151,18 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::rotatePointCloud(PointCloud<PointXYZ
 
 PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<PointXYZ>::Ptr cloud, FloatMatrixCOM trans_mat){
     Eigen::Affine3f trans=Eigen::Affine3f::Identity();
+
     trans.translation() << -trans_mat(0,0)+0.2, -trans_mat(1,0)+0.2, -trans_mat(2,0)+0.2;
+
     pcl::PointCloud<pcl::PointXYZ>::Ptr translated_cloud (new pcl::PointCloud<pcl::PointXYZ> ());
     pcl::transformPointCloud(*cloud, *translated_cloud, trans);
+
     return translated_cloud;
 }
 
 IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
 
+    int mag_factor = 50;
     IntMatrix mat;
     side_matrix_ = 30;
     // Initialize matrix
@@ -198,7 +186,7 @@ IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
             return mat;
         }
         else
-            mat[cloud->points[i].x*20][cloud->points[i].y*20][cloud->points[i].z*20]=1;
+            mat[(cloud->points[i].x)*mag_factor][(cloud->points[i].y)*mag_factor][(cloud->points[i].z)*mag_factor]=1; // use mag_factor to create voxels of small PCL
     }
     return mat;
 }

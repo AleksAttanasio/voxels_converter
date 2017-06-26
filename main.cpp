@@ -22,19 +22,21 @@ int main() {
     vc.writeMat(voxel_cloud, name + ".txt");
 
     viewer = vc.CloudVisualizer(cloud, translated_cloud);
-//    int cont=0;
-//    for(int i=0; i<voxel_cloud.size(); i++){
-//        for(int j=0; j<voxel_cloud[0].size(); j++){
-//            for(int k=0; k<voxel_cloud[0][0].size(); k++){
-//                if(voxel_cloud[i][j][k]==1){
-//                    std::ostringstream name;
-//                    name<<cont+0;
-//                    viewer->addCube(i, i+1, j, j+1, k, k+1, 0, 0, 0, name.str());
-//                    cont++;
-//                }
-//            }
-//        }
-//    }
+
+    // Visualize the voxel cloud
+    int cont=0;
+    for(int i=0; i<voxel_cloud.size(); i++){
+        for(int j=0; j<voxel_cloud[0].size(); j++){
+            for(int k=0; k<voxel_cloud[0][0].size(); k++){
+                if(voxel_cloud[i][j][k]==1){
+                    std::ostringstream name;
+                    name<<cont+0;
+                    viewer->addCube(i, i+1, j, j+1, k, k+1, 0, 0, 0, name.str());
+                    cont++;
+                }
+            }
+        }
+    }
 
     while (!viewer->wasStopped ())
     {
