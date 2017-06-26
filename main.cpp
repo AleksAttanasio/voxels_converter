@@ -10,6 +10,7 @@ int main() {
     Clusters cloud_clusters;
     IntMatrix voxel_cloud;
     string cloud_name = "obj_0";
+    cin >> cloud_name;
 
     cloud_clusters = vc.RegionGrowingSegment(cloud_name);
 
@@ -29,32 +30,33 @@ int main() {
         stringstream ss;
         ss << cloud_name << "_" << i << ".txt";
         vc.writeMat(voxel_cloud, ss.str());
-    }
+        viewer = vc.CloudVisualizer(cloud, translated_cloud);
 
 
-
-    viewer = vc.CloudVisualizer(cloud, translated_cloud);
-
-    // Visualize the voxel cloud
-    int cont=0;
-    for(int i=0; i<voxel_cloud.size(); i++){
-        for(int j=0; j<voxel_cloud[0].size(); j++){
-            for(int k=0; k<voxel_cloud[0][0].size(); k++){
-                if(voxel_cloud[i][j][k]==1){
-                    std::ostringstream name;
-                    name<<cont+0;
-                    viewer->addCube(i, i+1, j, j+1, k, k+1, 0, 0, 0, name.str());
-                    cont++;
+        // Visualize the voxel cloud
+        int cont=0;
+        for(int i=0; i<voxel_cloud.size(); i++){
+            for(int j=0; j<voxel_cloud[0].size(); j++){
+                for(int k=0; k<voxel_cloud[0][0].size(); k++){
+                    if(voxel_cloud[i][j][k]==1){
+                        std::ostringstream name;
+                        name<<cont+0;
+                        viewer->addCube(i, i+1, j, j+1, k, k+1, 0, 0, 0, name.str());
+                        cont++;
+                    }
                 }
             }
         }
+
+        while (!viewer->wasStopped ())
+        {
+            viewer->spinOnce (100);
+            boost::this_thread::sleep (boost::posix_time::microseconds (100000));
+        }
+
+        return 0;
     }
 
-    while (!viewer->wasStopped ())
-    {
-        viewer->spinOnce (100);
-        boost::this_thread::sleep (boost::posix_time::microseconds (100000));
-    }
 
-    return 0;
+
 }

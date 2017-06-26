@@ -67,7 +67,7 @@ public:
     FloatMatrixCOM getCenterOfMass (PointCloud<PointXYZ> cloud);
 
     // Segment the point cloud using Region Growing Segmentation method
-    Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 4.0, float curv_th = 0.5, float min_cluster_size = 200);
+    Clusters RegionGrowingSegment(string name_cloud, float smooth_th = 5.0, float curv_th = 0.5, float min_cluster_size = 200);
 
     PointCloud<PointXYZ>::Ptr generateCube(float x, float y, float z);
 
