@@ -62,6 +62,7 @@ Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
 
 //    Load cloud
     Clusters output_clusters;
+    name_cloud = name_cloud + ".pcd";
     PointCloud<PointXYZ>::Ptr cloud (new PointCloud<PointXYZ>);
     io::loadPCDFile <PointXYZ> (name_cloud, *cloud);
 
@@ -119,6 +120,8 @@ Clusters VoxelsConversion::RegionGrowingSegment(string name_cloud, float smooth_
         stringstream ss;
         ss << "rg_cluster_" << j << ".pcd";
         writer.write<pcl::PointXYZ> (ss.str (), *cloud_cluster_don, false);
+
+        output_clusters.push_back(*cloud_cluster_don);
     }
 //    // Visualize segmentation
 //    pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud ();

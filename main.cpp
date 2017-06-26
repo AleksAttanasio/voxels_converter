@@ -7,19 +7,31 @@ int main() {
     PointCloud<PointXYZ>::Ptr cloud (new PointCloud<PointXYZ>);
     PointCloud<PointXYZ>::Ptr translated_cloud;
     boost::shared_ptr<visualization::PCLVisualizer> viewer;
+    Clusters cloud_clusters;
     IntMatrix voxel_cloud;
-    string name = "rg_cluster_0";
+    string cloud_name = "obj_0";
 
-    io::loadPCDFile(name + ".pcd", *cloud);
+    cloud_clusters = vc.RegionGrowingSegment(cloud_name);
 
-    FloatMatrixCOM mass_center = vc.getCenterOfMass(*cloud);
-    cout << mass_center << endl;
+    io::loadPCDFile(cloud_name + ".pcd", *cloud);
 
-    cout << mass_center(0,0) << ", " << mass_center(1,0) << ", " << mass_center(2,0) << endl;
+    for(int i = 0; i < cloud_clusters.size(); i++) {
+        *cloud = cloud_clusters[i];
 
-    translated_cloud = vc.translatePointCloud(cloud, mass_center);
-    voxel_cloud = vc.getMatrix(translated_cloud);
-    vc.writeMat(voxel_cloud, name + ".txt");
+        // find center of mass
+        FloatMatrixCOM mass_center = vc.getCenterOfMass(*cloud);
+        cout << mass_center(0,0) << ", " << mass_center(1,0) << ", " << mass_center(2,0) << endl;
+
+        // move the cloud to the center of mass
+        translated_cloud = vc.translatePointCloud(cloud, mass_center);
+
+        voxel_cloud = vc.getMatrix(translated_cloud);
+        stringstream ss;
+        ss << cloud_name << "_" << i << ".txt";
+        vc.writeMat(voxel_cloud, ss.str());
+    }
+
+
 
     viewer = vc.CloudVisualizer(cloud, translated_cloud);
 
