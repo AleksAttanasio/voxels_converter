@@ -9,3 +9,6 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_executable(main main.cpp VoxelsConversion.cpp VoxelsConversion.h)
 target_link_libraries (main ${PCL_LIBRARIES})
+
+add_executable(voxel_test voxel_test.cpp)
+target_link_libraries (voxel_test ${PCL_LIBRARIES})

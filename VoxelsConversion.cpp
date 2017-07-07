@@ -165,7 +165,7 @@ PointCloud<PointXYZ>::Ptr VoxelsConversion::translatePointCloud(PointCloud<Point
 
 IntMatrix VoxelsConversion::getMatrix(PointCloud<PointXYZ>::Ptr cloud){
 
-    int mag_factor = 50;
+    int mag_factor = 80;
     IntMatrix mat;
     side_matrix_ = 30;
     // Initialize matrix

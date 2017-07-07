@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named voxel_test
+
+# Build rule for target.
+voxel_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 voxel_test
+.PHONY : voxel_test
+
+# fast build rule for target.
+voxel_test/fast:
+	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/build
+.PHONY : voxel_test/fast
+
+#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -177,6 +190,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+voxel_test.o: voxel_test.cpp.o
+
+.PHONY : voxel_test.o
+
+# target to build an object file
+voxel_test.cpp.o:
+	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/voxel_test.cpp.o
+.PHONY : voxel_test.cpp.o
+
+voxel_test.i: voxel_test.cpp.i
+
+.PHONY : voxel_test.i
+
+# target to preprocess a source file
+voxel_test.cpp.i:
+	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/voxel_test.cpp.i
+.PHONY : voxel_test.cpp.i
+
+voxel_test.s: voxel_test.cpp.s
+
+.PHONY : voxel_test.s
+
+# target to generate assembly for a file
+voxel_test.cpp.s:
+	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/voxel_test.cpp.s
+.PHONY : voxel_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -185,6 +225,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... voxel_test"
 	@echo "... main"
 	@echo "... VoxelsConversion.o"
 	@echo "... VoxelsConversion.i"
@@ -192,6 +233,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... voxel_test.o"
+	@echo "... voxel_test.i"
+	@echo "... voxel_test.s"
 .PHONY : help
 
 
