@@ -12,3 +12,6 @@ target_link_libraries (main ${PCL_LIBRARIES})
 
 add_executable(voxel_test voxel_test.cpp)
 target_link_libraries (voxel_test ${PCL_LIBRARIES})
+
+add_executable(pcd_reconstruction pcd_reconstruction.cpp VoxelsConversion.cpp VoxelsConversion.h GraspingDetection.cpp GraspingDetection.h)
+target_link_libraries (pcd_reconstruction ${PCL_LIBRARIES})

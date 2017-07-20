@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named pcd_reconstruction
+
+# Build rule for target.
+pcd_reconstruction: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pcd_reconstruction
+.PHONY : pcd_reconstruction
+
+# fast build rule for target.
+pcd_reconstruction/fast:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/build
+.PHONY : pcd_reconstruction/fast
+
+#=============================================================================
 # Target rules for targets named voxel_test
 
 # Build rule for target.
@@ -136,12 +149,40 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+GraspingDetection.o: GraspingDetection.cpp.o
+
+.PHONY : GraspingDetection.o
+
+# target to build an object file
+GraspingDetection.cpp.o:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/GraspingDetection.cpp.o
+.PHONY : GraspingDetection.cpp.o
+
+GraspingDetection.i: GraspingDetection.cpp.i
+
+.PHONY : GraspingDetection.i
+
+# target to preprocess a source file
+GraspingDetection.cpp.i:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/GraspingDetection.cpp.i
+.PHONY : GraspingDetection.cpp.i
+
+GraspingDetection.s: GraspingDetection.cpp.s
+
+.PHONY : GraspingDetection.s
+
+# target to generate assembly for a file
+GraspingDetection.cpp.s:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/GraspingDetection.cpp.s
+.PHONY : GraspingDetection.cpp.s
+
 VoxelsConversion.o: VoxelsConversion.cpp.o
 
 .PHONY : VoxelsConversion.o
 
 # target to build an object file
 VoxelsConversion.cpp.o:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/VoxelsConversion.cpp.o
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.o
 .PHONY : VoxelsConversion.cpp.o
 
@@ -151,6 +192,7 @@ VoxelsConversion.i: VoxelsConversion.cpp.i
 
 # target to preprocess a source file
 VoxelsConversion.cpp.i:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/VoxelsConversion.cpp.i
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.i
 .PHONY : VoxelsConversion.cpp.i
 
@@ -160,6 +202,7 @@ VoxelsConversion.s: VoxelsConversion.cpp.s
 
 # target to generate assembly for a file
 VoxelsConversion.cpp.s:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/VoxelsConversion.cpp.s
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/VoxelsConversion.cpp.s
 .PHONY : VoxelsConversion.cpp.s
 
@@ -189,6 +232,33 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+pcd_reconstruction.o: pcd_reconstruction.cpp.o
+
+.PHONY : pcd_reconstruction.o
+
+# target to build an object file
+pcd_reconstruction.cpp.o:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/pcd_reconstruction.cpp.o
+.PHONY : pcd_reconstruction.cpp.o
+
+pcd_reconstruction.i: pcd_reconstruction.cpp.i
+
+.PHONY : pcd_reconstruction.i
+
+# target to preprocess a source file
+pcd_reconstruction.cpp.i:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/pcd_reconstruction.cpp.i
+.PHONY : pcd_reconstruction.cpp.i
+
+pcd_reconstruction.s: pcd_reconstruction.cpp.s
+
+.PHONY : pcd_reconstruction.s
+
+# target to generate assembly for a file
+pcd_reconstruction.cpp.s:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/pcd_reconstruction.cpp.s
+.PHONY : pcd_reconstruction.cpp.s
 
 voxel_test.o: voxel_test.cpp.o
 
@@ -225,14 +295,21 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... pcd_reconstruction"
 	@echo "... voxel_test"
 	@echo "... main"
+	@echo "... GraspingDetection.o"
+	@echo "... GraspingDetection.i"
+	@echo "... GraspingDetection.s"
 	@echo "... VoxelsConversion.o"
 	@echo "... VoxelsConversion.i"
 	@echo "... VoxelsConversion.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... pcd_reconstruction.o"
+	@echo "... pcd_reconstruction.i"
+	@echo "... pcd_reconstruction.s"
 	@echo "... voxel_test.o"
 	@echo "... voxel_test.i"
 	@echo "... voxel_test.s"

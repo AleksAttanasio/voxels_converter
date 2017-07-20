@@ -1,4 +1,5 @@
 /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/pcd_reconstruction.dir
 /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/voxel_test.dir
 /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles/main.dir

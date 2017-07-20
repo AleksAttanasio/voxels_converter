@@ -60,13 +60,50 @@ CMAKE_SOURCE_DIR = /home/osboxes/voxels_converter
 CMAKE_BINARY_DIR = /home/osboxes/voxels_converter/cmake-build-debug
 
 #=============================================================================
+# Target rules for target CMakeFiles/pcd_reconstruction.dir
+
+# All Build rule for target.
+CMakeFiles/pcd_reconstruction.dir/all:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/depend
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles --progress-num=4,5,6,7 "Built target pcd_reconstruction"
+.PHONY : CMakeFiles/pcd_reconstruction.dir/all
+
+# Include target in all.
+all: CMakeFiles/pcd_reconstruction.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/pcd_reconstruction.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/pcd_reconstruction.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/pcd_reconstruction.dir/rule
+
+# Convenience name for target.
+pcd_reconstruction: CMakeFiles/pcd_reconstruction.dir/rule
+
+.PHONY : pcd_reconstruction
+
+# clean rule for target.
+CMakeFiles/pcd_reconstruction.dir/clean:
+	$(MAKE) -f CMakeFiles/pcd_reconstruction.dir/build.make CMakeFiles/pcd_reconstruction.dir/clean
+.PHONY : CMakeFiles/pcd_reconstruction.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/pcd_reconstruction.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/voxel_test.dir
 
 # All Build rule for target.
 CMakeFiles/voxel_test.dir/all:
 	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/depend
 	$(MAKE) -f CMakeFiles/voxel_test.dir/build.make CMakeFiles/voxel_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles --progress-num=4,5 "Built target voxel_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/osboxes/voxels_converter/cmake-build-debug/CMakeFiles --progress-num=8,9 "Built target voxel_test"
 .PHONY : CMakeFiles/voxel_test.dir/all
 
 # Include target in all.

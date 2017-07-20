@@ -37,6 +37,74 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="pcd_reconstruction">
+				<Option output="/home/osboxes/voxels_converter/cmake-build-debug/pcd_reconstruction" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/osboxes/voxels_converter/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDISABLE_PCAP"/>
+					<Add option="-DDISABLE_PNG"/>
+					<Add option="-DEIGEN_USE_NEW_STDVECTOR"/>
+					<Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET"/>
+					<Add option="-DFLANN_STATIC"/>
+					<Add option="-Dqh_QHpointer"/>
+					<Add directory="/usr/include/vtk-5.8"/>
+					<Add directory="/usr/include/pcl-1.7"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/include/ni"/>
+					<Add directory="/usr/include/openni2"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 pcd_reconstruction"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="pcd_reconstruction/fast">
+				<Option output="/home/osboxes/voxels_converter/cmake-build-debug/pcd_reconstruction" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/osboxes/voxels_converter/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDISABLE_PCAP"/>
+					<Add option="-DDISABLE_PNG"/>
+					<Add option="-DEIGEN_USE_NEW_STDVECTOR"/>
+					<Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET"/>
+					<Add option="-DFLANN_STATIC"/>
+					<Add option="-Dqh_QHpointer"/>
+					<Add directory="/usr/include/vtk-5.8"/>
+					<Add directory="/usr/include/pcl-1.7"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/include/ni"/>
+					<Add directory="/usr/include/openni2"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 pcd_reconstruction/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/osboxes/voxels_converter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="voxel_test">
 				<Option output="/home/osboxes/voxels_converter/cmake-build-debug/voxel_test" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/osboxes/voxels_converter/cmake-build-debug"/>
@@ -174,14 +242,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/osboxes/voxels_converter/GraspingDetection.cpp">
+			<Option target="pcd_reconstruction"/>
+		</Unit>
+		<Unit filename="/home/osboxes/voxels_converter/GraspingDetection.h">
+			<Option target="pcd_reconstruction"/>
+		</Unit>
 		<Unit filename="/home/osboxes/voxels_converter/VoxelsConversion.cpp">
+			<Option target="pcd_reconstruction"/>
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/home/osboxes/voxels_converter/VoxelsConversion.h">
+			<Option target="pcd_reconstruction"/>
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/home/osboxes/voxels_converter/main.cpp">
 			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/osboxes/voxels_converter/pcd_reconstruction.cpp">
+			<Option target="pcd_reconstruction"/>
 		</Unit>
 		<Unit filename="/home/osboxes/voxels_converter/voxel_test.cpp">
 			<Option target="voxel_test"/>
